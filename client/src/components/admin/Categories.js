@@ -10,6 +10,7 @@ const apiURL = process.env.REACT_APP_API_URL
 
 export default function CategoriesList() {
   const [add, setAdd] = useState(false)
+  const [fetch, setFetch] = useState(false)
   const [categories, setCategories] = useState(null)
   let navigate = useNavigate()
 
@@ -20,7 +21,7 @@ export default function CategoriesList() {
     axios.get(`${apiURL}/api/categories/get`).then(function (response) {
       setCategories(response.data?.categories || [])
     })
-  }, [add])
+  }, [add, fetch])
 
   return (
     <Grid style={{ padding: '5%', paddingLeft: '20%', paddingRight: '20%', textAlign: 'center' }}>
@@ -42,7 +43,9 @@ export default function CategoriesList() {
             </Grid>
           </Grid>
         </Paper>
-        <Grid>{categories?.length && <CategoriesTable categories={categories} />}</Grid>
+        <Grid>
+          <CategoriesTable categories={categories} fetch={fetch} setFetch={setFetch} />
+        </Grid>
         <Modal
           isOpen={add}
           onClose={() => {

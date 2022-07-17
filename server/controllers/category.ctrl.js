@@ -27,6 +27,21 @@ const getallcategory = async(req, res) => {
         })
     }
 }
+const deletecategory = async(req, res) => {
+	console.log(req.body)
+	try {
+			const categories = await CategoryModel.remove({_id:req.body.id})
+			res.status(200).json({
+					categories
+			})
+	} catch (e) {
+			res.status(500).json({
+					error: {
+							msg: 'Some error occurred'
+					}
+			})
+	}
+}
 
 const createquestion = async(req, res) => {
     const { catname, catid } = req.params;
@@ -89,5 +104,6 @@ module.exports = {
     createcategory,
     getallcategory,
     createquestion,
-    getallquestion
+    getallquestion,
+		deletecategory
 }
